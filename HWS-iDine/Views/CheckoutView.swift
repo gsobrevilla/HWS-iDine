@@ -51,11 +51,18 @@ struct CheckoutView: View {
                 .pickerStyle(.segmented)
             }
            
-            Section(header: Text("TOTAL: \(totalPrice)").font(.largeTitle)) {
+            Section(header: Text("TOTAL \(totalPrice)")
+                .font(.title3).foregroundColor(.black))
+            {
                 Button("Confirm order") {
                     showingPaymentAlert.toggle()
                 }
+                .listRowBackground(Color.green)
+                .foregroundColor(.white)
+                .font(.headline)
+                
             }
+            
         }
         .navigationTitle("Payment")
         .navigationBarTitleDisplayMode(.inline)

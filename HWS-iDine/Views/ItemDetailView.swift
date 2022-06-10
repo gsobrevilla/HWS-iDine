@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct ItemDetail: View {
+struct ItemDetailView: View {
     
     let item: MenuItem
     
     @EnvironmentObject var order: Order
+    @EnvironmentObject var favorites: Favorites
     
     var body: some View {
         VStack {
@@ -33,20 +34,43 @@ struct ItemDetail: View {
             Button("Order this") {
                 order.add(item: item)
             }
+            .padding()
             .font(.headline)
-            
+            .background(.green)
+            .foregroundColor(.white)
+            .cornerRadius(10)
             Spacer()
         }
         .navigationTitle(item.name)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            // Favorite button
+            Button {
+                if favorites.isFavorite(item: item) {
+                    favorites.remove(item: item)
+                } else {
+                    favorites.add(item: item)
+                }
+            } label: {
+                if favorites.isFavorite(item: item) {
+                    Image(systemName: "heart.fill")
+                        .symbolRenderingMode(.multicolor)
+                } else {
+                    Image(systemName: "heart")
+                        .symbolRenderingMode(.multicolor)
+                }
+                
+            }
+        }
     }
 }
 
 struct ItemDetail_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ItemDetail(item: MenuItem.example)
+            ItemDetailView(item: MenuItem.example)
                 .environmentObject(Order())
+                .environmentObject(Favorites())
         }
     }
 }

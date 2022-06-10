@@ -10,7 +10,7 @@ import SwiftUI
 struct MainView: View {
     var body: some View {
         TabView {
-            ContentView()
+            MenuView()
                 .tabItem {
                     Label("Menu", systemImage: "list.dash")
                 }
@@ -19,12 +19,19 @@ struct MainView: View {
                 .tabItem {
                     Label("Order", systemImage: "square.and.pencil")
                 }
+            
+            FavoritesView()
+                .tabItem {
+                    Label("Favorites", systemImage: "heart")
+                }
         }
     }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView().environmentObject(Order())
+        MainView()
+            .environmentObject(Order())
+            .environmentObject(Favorites())
     }
 }
